@@ -28,9 +28,10 @@ public class UserEntity implements UserDetails {
     private Set<RoleEntity> roles = new HashSet<>();
     private LocalDate initDate;
 
-    @OneToMany(mappedBy = "creator")
+    @Transient
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     private Set<QuizEntity> createdQuizzes = new HashSet<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<ResultEntity> results = new HashSet<>();
 
     public UserEntity(){}
@@ -76,5 +77,7 @@ public class UserEntity implements UserDetails {
     public String getPassword() {
         return password;
     }
+
+
 
 }

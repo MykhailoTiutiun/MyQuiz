@@ -1,5 +1,6 @@
 package com.mykhailotiutiun.myquiz.services;
 
+import com.mykhailotiutiun.myquiz.data.entities.QuizEntity;
 import com.mykhailotiutiun.myquiz.data.entities.RoleEntity;
 import com.mykhailotiutiun.myquiz.data.entities.UserEntity;
 import com.mykhailotiutiun.myquiz.data.repositories.RolesRepository;
@@ -71,6 +72,13 @@ public class UsersService implements UserDetailsService {
         }
 
         usersRepository.save(userEntity);
+    }
+
+    @Transactional
+    public void addQuiz(UserEntity userEntity, QuizEntity quizEntity){
+        Set<QuizEntity> quizEntities = userEntity.getCreatedQuizzes();
+        quizEntities.add(quizEntity);
+        userEntity.setCreatedQuizzes(quizEntities);
     }
 
     public void addRole(UserEntity userEntity, Long roleId){

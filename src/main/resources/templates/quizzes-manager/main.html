@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyQuiz | My Quizzes</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script>
+    function show (a) {
+    if(a===0) {
+    document.getElementById("createQuizForm").style.display = "none";
+    document.getElementById("createQuizButton").style.display = "block";
+    } else if(a===1) {
+        document.getElementById("createQuizForm").style.display = "block";
+        document.getElementById("createQuizButton").style.display = "none";
+    }}
+    </script>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<br>
+<br>
+<br>
+
+<div class="quiz-label-div">
+    <span>My Quizzes</span>
+</div>
+
+<div class="quiz-container-div">
+    <span th:if="${quizzes.isEmpty()}">You haven't created any quizzes</span>
+    <table th:if="${!quizzes.isEmpty()}">
+        <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="quiz : ${quizzes}">
+            <td th:text="${quiz.id}"></td>
+            <td th:text="${quiz.name}"></td>
+            <td>
+                <form th:action="@{/quizzes-manager}" method="post">
+                    <input type="hidden" name="quizId" th:value="${quiz.id}">
+                    <input type="hidden" name="action" value="change-questions">
+                    <button type="submit">Change Questions</button>
+                </form>
+
+                <form th:action="@{/quizzes-manager}" method="post">
+                    <input type="hidden" name="quizId" th:value="${quiz.id}">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <button id="createQuizButton" type="button" onclick="show(1);">Create Quiz</button>
+
+    <form id="createQuizForm" style="display: none" th:action="@{/quizzes-manager/create-quiz}" method="post" th:object="${quizForm}">
+        <h3>Create Lesson</h3>
+        <div>
+            <input type="text" th:field="*{name}" placeholder="Name" autofocus="true">
+        </div>
+        <br>
+        <button type="submit">Create</button>
+        <button type="button" onclick="show(0);">Cancel</button>
+    </form>
+</div>
+</body>
+</html>

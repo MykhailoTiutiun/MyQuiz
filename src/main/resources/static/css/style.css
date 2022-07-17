@@ -12,6 +12,10 @@ table, th, td {
     border: 1px solid black;
 }
 
+td {
+   padding: 10px 15px;
+}
+
 .actionsForms {
     display: grid;
     border-inline: none;
@@ -113,4 +117,13 @@ ul{
 
 .reg-error-span {
     background-color: coral;
+}
+
+.quiz-label-div {
+    padding: 10px;
+    font-size: x-large;
+}
+
+.quiz-container-div {
+    padding: 10px;
 }
