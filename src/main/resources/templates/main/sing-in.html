@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyQuiz | Sing in</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<br>
+<br>
+<br>
+
+<div>
+    <form method="POST" th:action="@{/sing-in}">
+        <h2>Sing in</h2>
+        <div>
+            <input name="email" type="email" placeholder="Email"
+                   autofocus="true"/>
+        </div>
+        <div>
+            <input name="password" type="password" placeholder="Password"/>
+        </div>
+        <div>
+            <button type="submit">Sing in</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

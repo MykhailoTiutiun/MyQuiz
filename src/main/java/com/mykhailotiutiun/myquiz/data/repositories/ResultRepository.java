@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ResultRepository extends JpaRepository<ResultEntity, Long> {
-
     List<ResultEntity> findAllByUser(UserEntity user);
 }

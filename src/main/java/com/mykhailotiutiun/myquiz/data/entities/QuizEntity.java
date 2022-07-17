@@ -12,8 +12,7 @@ import java.util.Set;
 public class QuizEntity {
 
     @Id
-    @GeneratedValue
-    private Long Id;
+    private Long id;
     private String name;
     @ManyToOne
     private UserEntity creator;
@@ -26,7 +25,8 @@ public class QuizEntity {
     public QuizEntity() {
     }
 
-    public QuizEntity(String name, UserEntity creator) {
+    public QuizEntity(Long id, String name, UserEntity creator) {
+        this.id = id;
         this.name = name;
         this.creator = creator;
     }

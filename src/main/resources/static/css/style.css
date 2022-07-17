@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+table {
+    border-collapse: collapse;
+}
+body{
+    font-family: "Roboto", sans-serif;
+    font-size: medium;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+.actionsForms {
+    display: grid;
+    border-inline: none;
+    border-bottom: medium;
+    border-top: none;
+}
+
+.removeGradeButtons {
+    display: inline-block;
+}
+
+form {
+    display: grid;
+}
+
+button {
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.nav-bar {
+    background-color: limegreen;
+    top:0;
+    position: fixed;
+    right: 0;
+    left: 0;
+    min-height: 50px;
+    border: 1px solid limegreen;
+}
+
+li, ul{
+    float: left;
+}
+
+.link {
+    padding: 10px 15px;
+    cursor: pointer;
+    text-decoration-color: grey;
+    text-decoration-line: none;
+    color: black;
+}
+
+
+.name-span{
+    font-size: x-large;
+    padding: 10px 10px;
+    line-height: 50px;
+}
+
+ul{
+    list-style: none;
+}
+
+.auth-list{
+    float: right;
+}
+
+.container{
+    display: block;
+    float: none;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.auth-div {
+    float: right;
+}
+
+.navbar-header{
+    float: left;
+}
+
+.nav-buttons-div{
+    float: left;
+}
+
+.user-span {
+    padding: 10px 15px;
+}
+
+
+.username-div, .user-containers, .specialization-div, .employee-grades-div, .employee-grades-span, .marks-list-part, .marks-list, .verified-div {
+    padding: 10px 10px;
+}
+
+.username-div{
+    font-size: x-large;
+}
+
+.user-containers{
+    font-size: larger;
+}
+
+.employee-grades-span{
+    padding-left: 0px;
+}
+
+.reg-error-span {
+    background-color: coral;
+}

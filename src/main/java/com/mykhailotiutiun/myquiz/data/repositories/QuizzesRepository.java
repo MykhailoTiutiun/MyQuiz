@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface QuizzesRepository extends JpaRepository<QuizEntity, Long> {
 
+    QuizEntity findByName(String name);
     List<QuizzesRepository> findAllByCreator(UserEntity creator);
 }

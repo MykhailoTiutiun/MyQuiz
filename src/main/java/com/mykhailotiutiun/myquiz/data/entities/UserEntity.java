@@ -24,7 +24,7 @@ public class UserEntity implements UserDetails {
     private String password;
     @Transient
     private String passwordConfirm;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<RoleEntity> roles = new HashSet<>();
     private LocalDate initDate;
 
@@ -40,12 +40,11 @@ public class UserEntity implements UserDetails {
         this.email = email;
         this.password = password;
         this.passwordConfirm = passwordConfirm;
-        this.initDate = LocalDate.now();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
