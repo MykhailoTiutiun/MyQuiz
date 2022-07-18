@@ -18,13 +18,13 @@ public class ResultEntity {
     private QuizEntity quiz;
 
     @OneToMany(mappedBy = "result")
-    private Set<QuestionAnswerEntity> questionsAnswers = new HashSet<>();
+    private Set<QuestionEntity> questionsAnswers = new HashSet<>();
     @ManyToOne
     private UserEntity user;
 
     public ResultEntity() {}
 
-    public ResultEntity(QuizEntity quiz, Set<QuestionAnswerEntity> questionsAnswers, UserEntity user) {
+    public ResultEntity(QuizEntity quiz, Set<QuestionEntity> questionsAnswers, UserEntity user) {
         this.quiz = quiz;
         this.questionsAnswers = questionsAnswers;
         this.user = user;

@@ -3,6 +3,11 @@
 table {
     border-collapse: collapse;
 }
+
+.create-button, table{
+    width: 100%;
+}
+
 body{
     font-family: "Roboto", sans-serif;
     font-size: medium;
@@ -21,6 +26,10 @@ td {
     border-inline: none;
     border-bottom: medium;
     border-top: none;
+}
+
+.question-column {
+    width: 90%;
 }
 
 .removeGradeButtons {

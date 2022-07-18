@@ -16,8 +16,10 @@ public class QuizEntity {
     private String name;
     @ManyToOne
     private UserEntity creator;
+
+    @Transient
     @OneToMany(mappedBy = "quiz")
-    private Set<QuestionAnswerEntity> questions = new HashSet<>();
+    private Set<QuestionEntity> questions = new HashSet<>();
 
     @OneToMany(mappedBy = "quiz")
     private Set<ResultEntity> results = new HashSet<>();

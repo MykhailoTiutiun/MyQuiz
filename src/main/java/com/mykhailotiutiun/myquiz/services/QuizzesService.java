@@ -22,6 +22,10 @@ public class QuizzesService {
         return quizzesRepository.findAll();
     }
 
+    public QuizEntity getQuizById(Long quizId){
+        return quizzesRepository.findById(quizId).get();
+    }
+
     public List<QuizEntity> getAllQuizzesByUser(UserEntity userEntity){
         return quizzesRepository.findAllByCreator(userEntity);
     }

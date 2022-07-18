@@ -8,15 +8,15 @@ import java.util.Map;
 
 @Data
 @Entity
-@Table(name = "question_answer")
-public class QuestionAnswerEntity {
+@Table(name = "question")
+public class QuestionEntity {
 
     @Id
     @GeneratedValue
     private Long id;
     private String question;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable
     private Map<String, Boolean> answers = new HashMap<>();
 
@@ -26,16 +26,16 @@ public class QuestionAnswerEntity {
     @ManyToOne
     private ResultEntity result;
 
-    public QuestionAnswerEntity() {
+    public QuestionEntity() {
     }
 
-    public QuestionAnswerEntity(String question, Map<String, Boolean> answers, QuizEntity quiz) {
+    public QuestionEntity(String question, Map<String, Boolean> answers, QuizEntity quiz) {
         this.question = question;
         this.answers = answers;
         this.quiz = quiz;
     }
 
-    public QuestionAnswerEntity(String question, Map<String, Boolean> answers, ResultEntity result) {
+    public QuestionEntity(String question, Map<String, Boolean> answers, ResultEntity result) {
         this.question = question;
         this.answers = answers;
         this.result = result;

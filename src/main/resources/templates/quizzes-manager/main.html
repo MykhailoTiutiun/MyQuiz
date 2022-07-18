@@ -38,8 +38,8 @@
     <table th:if="${!quizzes.isEmpty()}">
         <thead>
         <tr>
-            <td>Id</td>
-            <td>Name</td>
+            <td style="width: 8%">Id</td>
+            <td style="width: 70%;">Name</td>
             <td>Actions</td>
         </tr>
         </thead>
@@ -66,7 +66,7 @@
 
     <br>
 
-    <button id="createQuizButton" type="button" onclick="show(1);">Create Quiz</button>
+    <button id="createQuizButton" class="create-button" type="button" onclick="show(1);">Create Quiz</button>
 
     <form id="createQuizForm" style="display: none" th:action="@{/quizzes-manager/create-quiz}" method="post" th:object="${quizForm}">
         <h3>Create Lesson</h3>

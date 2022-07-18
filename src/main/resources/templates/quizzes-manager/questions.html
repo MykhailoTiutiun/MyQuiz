@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MyQuiz | Questions</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+    <script>
+        function setLessonId(id){
+            var elements = document.getElementsByClassName("lessonIdInput");
+            for(var i = 0; i < elements.length; i++) {
+                elements[i].value = id;
+            }
+        }
+
+        function show (a) {
+            if(a===0) {
+                document.getElementById("createQuestionForm").style.display = "none";
+                document.getElementById("createQuestionButton").style.display = "block";
+            } else if(a===1) {
+                document.getElementById("createQuestionForm").style.display = "block";
+                document.getElementById("createQuestionButton").style.display = "none";
+            }}
+    </script>
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<br>
+<br>
+<br>
+
+<div class="quiz-label-div">
+    <span th:text="${quiz.name}"></span>
+</div>
+
+<div class="quiz-container-div">
+    <span th:if="${questions.isEmpty()}">You haven't created any questions</span>
+    <table th:if="${!questions.isEmpty()}">
+        <thead>
+        <tr>
+            <td class="question-column">Question</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="question : ${questions}">
+            <td th:text="${question.question}"></td>
+            <td>
+                <form th:action="@{/quizzes-manager/questions}" method="post">
+                    <input type="hidden" name="questionId" th:value="${question.id}">
+                    <input type="hidden" name="action" value="selectQuestion">
+                    <button type="submit">Change Answers</button>
+                </form>
+                <form th:action="@{/quizzes-manager/questions}" method="post">
+                    <input type="hidden" name="questionId" th:value="${question.id}">
+                    <input type="hidden" name="action" value="delete">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <table th:if="${selectedQuestion.id != null}">
+        <thead>
+        <tr>
+            <td>Answer</td>
+            <td>Is True</td>
+            <td>Actions</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="answer : ${selectedQuestion.answers.keySet()}">
+            <td th:text="${answer}"></td>
+            <td th:text="${selectedQuestion.answers.get(answer)}"></td>
+            <td>
+                <form th:action="@{/quizzes-manager/questions}" method="post">
+                    <input type="hidden" name="questionId" th:value="${selectedQuestion.id}">
+                    <input type="hidden" name="name" th:value="${answer}">
+                    <input type="hidden" name="action" value="deleteAnswer">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+
+    <button id="createQuestionButton" class="create-button" type="button" onclick="show(1);">Create</button>
+
+    <form id="createQuestionForm" style="display: none" th:action="@{/quizzes-manager/questions}" method="post">
+        <span th:if="${selectedQuestion.id == null}" style="font-size: larger">Create Question</span>
+        <span th:if="${selectedQuestion.id != null}" style="font-size: larger">Create Answer</span>
+        <div>
+            <input type="text" name="name" placeholder="Name" autofocus="true">
+        </div>
+        <div th:if="${selectedQuestion.id != null}">
+            <span>Is True</span>
+            <input type="checkbox" name="isTrue">
+        </div>
+        <input th:if="${selectedQuestion.id == null}" type="hidden" name="action" value="create">
+        <input th:if="${selectedQuestion.id != null}" type="hidden" name="action" value="createAnswer">
+        <input th:if="${selectedQuestion.id != null}" type="hidden" name="questionId" th:value="${selectedQuestion.id}">
+        <br>
+        <button type="submit">Create</button>
+        <button type="button" onclick="show(0);">Cancel</button>
+    </form>
+
+    <form th:if="${selectedQuestion.id != null}" th:action="@{/quizzes-manager/questions}" method="post">
+        <input type="hidden" name="action" value="selectQuestion">
+        <input type="hidden" name="questionId" value="-1">
+        <br>
+        <button class="create-button" type="submit">Unselect Question</button>
+    </form>
+</div>
+</body>
+</html>

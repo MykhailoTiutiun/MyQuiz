@@ -1,6 +1,8 @@
 package com.mykhailotiutiun.myquiz.web.controllers;
 
+import com.mykhailotiutiun.myquiz.data.entities.QuestionEntity;
 import com.mykhailotiutiun.myquiz.data.entities.QuizEntity;
+import com.mykhailotiutiun.myquiz.services.QuestionsService;
 import com.mykhailotiutiun.myquiz.services.QuizzesService;
 import com.mykhailotiutiun.myquiz.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,12 @@ public class QuizzesController {
     private UsersService usersService;
     @Autowired
     private QuizzesService quizzesService;
+    @Autowired
+    private QuestionsService questionsService;
 
     private Long chosenQuizId = null;
+
+    private Long chosenQuestionId = -1L;
 
     @GetMapping("/quizzes-manager")
     public String quizzesPage(Model model){
@@ -48,5 +54,36 @@ public class QuizzesController {
         return "redirect:/quizzes-manager";
     }
 
+    @GetMapping("/quizzes-manager/questions")
+    public String questionsPage(Model model){
+        if (chosenQuizId == null) {
+            return "redirect:/quizzes-manager";
+        }
 
+        QuestionEntity chosenQuestion;
+        if(chosenQuestionId < 0) {
+            chosenQuestion = new QuestionEntity();
+        } else {
+            chosenQuestion = questionsService.getQuestionById(chosenQuestionId);
+        }
+
+        model.addAttribute("quiz", quizzesService.getQuizById(chosenQuizId));
+        model.addAttribute("questions", questionsService.getAllQuestionsByQuiz(quizzesService.getQuizById(chosenQuizId)));
+        model.addAttribute("selectedQuestion", chosenQuestion);
+        return "quizzes-manager/questions";
+
+    }
+
+    @PostMapping("/quizzes-manager/questions")
+    public String questionsActions(@RequestParam(name = "action") String action, @RequestParam(name = "questionId", required = false) Long questionId, @RequestParam(name = "name", required = false) String name, @RequestParam(name = "isTrue", required = false) Boolean isTrue, Model model) {
+        switch (action) {
+            case ("create") -> questionsService.createQuestion(name, quizzesService.getQuizById(chosenQuizId));
+            case ("selectQuestion") -> {chosenQuestionId = questionId; return "redirect:/quizzes-manager/questions";}
+            case ("createAnswer") -> questionsService.addAnswer(questionId, name, isTrue);
+            case ("deleteAnswer") -> questionsService.removeAnswer(questionId, name);
+            case ("delete") -> questionsService.deleteQuestion(questionId);
+            default -> throw new IllegalStateException("Unexpected value: " + action);
+        }
+        return "redirect:/quizzes-manager/questions";
+    }
 }
